@@ -1,18 +1,43 @@
+/*
+firstItem = cool
 
-const { serialize } = require("v8");
-const stringSimilarity = require("./node_modules/string-similarity");
+first loop (lock):
+  loop characters in cool:
+    1. c
+      lock -> lok, 4 > 3, so exist, result = ['c'], arr[i] = lok
+    2. o
+      lok -> lk, 3 > 2, so exist, result = ['c', 'o'], arr[i] = lk;
+    3. o
+      lk -> lk, 2 = 2, so doesn't exist, result = ['c', 'o'], arr[i] = lk;
+    4. 1
 
-const text = '123 by ella';
 
-const input = '';
+second loop (cook):
+  loop characters in co:
+    1. c
+      cook -> ook, 4 > 3, so exist, result = ['c'], arr[i] = ook;
+    2. o
+      ook -> ok, 3 > 2, so exist, result = ['c', 'o'], arr[i] = ok;
+*/
 
-if(text.includes(input)){
-  console.log(true);
-} else {
-  console.log(false);
+
+const getCommonCharacters = (arr) => {
+  let firstItem = arr[0];
+  let result = [...firstItem];
+
+  for (let i = 1; i < arr.length; i += 1) {
+    result = result.filter((c) => {
+      const length = arr[i].length;
+      arr[i] = arr[i].replace(c, "");
+      return length > arr[i].length;
+    })
+  }
+
+  return result;
 }
 
-const num = '123 abc 032 oewqoqw12我是!!';
 
-const seoncd = num.replace(/[\d#$%^&*().,!:''-=]+/g, '');
-console.log(seoncd);
+// const words = ["bella","label","roller"];
+const words = ["cool","lock","cook"]
+
+console.log(getCommonCharacters(words));
